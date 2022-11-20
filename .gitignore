@@ -37,6 +37,10 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+WorkshopCreate.xml
+WorkshopUpdate.xml
+icon.png
+
 *_i.c
 *_p.c
 *_i.h
