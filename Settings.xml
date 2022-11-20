@@ -1,0 +1,85 @@
+<Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<!--
+	Cost in gold to pay the new hero up-front. Doesn't affect daily payments.
+	-->
+	<up_front_cost>0</up_front_cost>
+	
+	<!--
+	Maximum number of selectable nominees (only for 1.4.1 beta)
+	-->
+	<max_nominations>2</max_nominations>
+	
+	<!--
+	Increase in nomination chance per kill count of the nominee with the highest kills
+	-->
+	<combat_perf_nomination_chance_increase_per_kill>0.2</combat_perf_nomination_chance_increase_per_kill>
+	
+	<!--
+	number of kills required by an individual unit for nomination
+	-->
+	<inf_kill_threshold>5</inf_kill_threshold>
+	
+	<!--
+	number of kills required by an individual unit for nomination
+	-->
+	<cav_kill_threshold>6</cav_kill_threshold>
+	
+	<!--
+	number of kills required by an individual unit for nomination
+	-->
+	<ran_kill_threshold>7</ran_kill_threshold>
+	
+	<!--
+	Total number of combatants for effective nomination chance to be equal to nomination_chance variable
+	-->
+	<battle_size_scale>50</battle_size_scale>
+	
+	<!--
+	The miniumum tier of troop elegible to be nominated to become a companion
+	-->
+	<tier_threshold>4</tier_threshold>
+	
+	<!--
+	The chance for a nomination to occurr after a battle
+	-->
+	<nomination_chance>0.05</nomination_chance>
+	
+	<!--
+	The total number of additional skill points to add to the new companion
+	-->
+	<base_additional_skill_points>150</base_additional_skill_points>
+	
+	<!--
+	The number of leadership points necessary for 50 extra skill points to be assigned
+	-->
+	<leadership_points_per_50_extra_skill_points>100</leadership_points_per_50_extra_skill_points>
+	
+	<!--
+	The chance that a companion reduced to zero HP during a battle will die.
+	-->
+	<lethality_chance>-1</lethality_chance>
+	
+	<!--
+	The additional reduction in companion death chance for every 10 Medicine skill points
+	-->
+	<medicine_death_chance_reduction>0.0</medicine_death_chance_reduction>
+	
+	<!--
+	Factor by which to reduce chance of a companion in a different party dying when wounded.
+	Set > 1 to lower chance of death, < 1 to increase
+	-->
+	<away_lethality_reduction_factor>2</away_lethality_reduction_factor>
+	
+	
+	<!--
+	Replaces the post-battle nomination system with different behaviour:
+	Units upgraded to the tier_threshold will now automatically become heroes
+	-->
+	<upgrade_to_hero>false</upgrade_to_hero>
+	
+	<!--
+	Fill in perks on newly-generated heroes?
+	-->
+	<fill_in_perks>false</fill_in_perks>
+</Settings>

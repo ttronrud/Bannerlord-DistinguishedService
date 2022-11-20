@@ -1,0 +1,36 @@
+﻿<Module>
+  <Name value="Distinguished Service"/>
+  <Id value="DistinguishedService"/>
+  <Version value="v5.1.0"/>
+  <SingleplayerModule value="true"/>
+  <MultiplayerModule value="false"/>
+  <DependedModules>
+  </DependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="DistinguishedService"/>
+      <DLLName value="DistinguishedService.dll"/>
+      <SubModuleClassType value="DistinguishedService.dsSubModule"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+  <Xmls>
+    <XmlNode>
+      <XmlName id="NPCCharacters" path="dstemplate"/>
+      <IncludedGameTypes>
+        <GameType value = "Campaign"/>
+        <GameType value = "CampaignStoryMode"/>
+      </IncludedGameTypes>
+    </XmlNode>
+    <XmlNode>
+      <XmlName id="ItemModifiers" path="ds_item_modifiers"/>
+      <IncludedGameTypes>
+        <GameType value = "Campaign"/>
+        <GameType value = "CampaignStoryMode"/>
+      </IncludedGameTypes>
+    </XmlNode>
+  </Xmls>
+</Module>

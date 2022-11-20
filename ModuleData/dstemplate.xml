@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NPCCharacters>
+	<!--EMPIRE-->
+	<NPCCharacter id="ds_template_inf" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_template="true" is_hero="false" culture="Culture.empire" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="25.57"
+                      weight="0.3164"
+                      build="0.2485"
+                      key="00058005800000010070030000005603066570389047200005607503731010000144501304272514000000000000000000000000000000000000000010880000" />
+      <BodyPropertiesMax version="4"
+                         age="52.55"
+                         weight="0.5787"
+                         build="0.6275"
+                         key="0016F80CC000338674802B0C5363FD566ACA79ACC789EC463BBDAF6A7C3B8A3507BA90780B69CFB500000000000000000000000000000000000000006F708105" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  <NPCCharacter id="ds_template_inf_fe" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_female = "true" is_template="true" is_hero="false" culture="Culture.empire" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="22.05"
+                      weight="0.2918"
+                      build="0.2886"
+                      key="0000740450000001A6710103466300028800860450702325D752662173535434014446140403341200000000000000000000000000000000000000000A940001" />
+      <BodyPropertiesMax version="4"
+                         age="50.58"
+                         weight="0.6067"
+                         build="0.6255"
+                         key="0011F80CD22C30078974475B9AD7B979EAD98BA9AD97BB57DDC8BF7B799BABB808BCC6890B38CCDA00000000000000000000000000000000000000006D6C40C4" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  
+  <!--VLANDIA-->
+	<NPCCharacter id="ds_template_inf_vlandia" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_template="true" is_hero="false" culture="Culture.vlandia" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="22.57"
+                      weight="0.2731"
+                      build="0.4583"
+                      key="0000000000CC000A606000433032016372097758505043769733A910780840320157461305313704000000000000000000000000000000000000000006A40003" />
+      <BodyPropertiesMax version="4"
+                         age="50.08"
+                         weight="0.5869"
+                         build="0.6118"
+                         key="000B8C0A00CC0010AA73587A27A7B9EBBBDF8BBBB885ACA8BEBAFE4A8C9BA9CC06BCB6680B7EFEEE0000000000000000000000000000000000000000717440C4" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  <NPCCharacter id="ds_template_inf_fe_vlandia" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_female = "true" is_template="true" is_hero="false" culture="Culture.vlandia" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4" age="20.33" weight="0.1349" build="0.2423"  key="0000000000000001116107530004609400107303604127003112061370100020005550030553071000000000000000000000000000000000000000000E980000"  />
+      <BodyPropertiesMax version="4" age="60.09" weight="0.5818" build="0.6065"  key="000B64058000338685844F59636679F73A87899B7381CE678DFB8E4B8757764705B980570B7BEEE4000000000000000000000000000000000000000067608105"  />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  
+  <!--STURGIA-->
+	<NPCCharacter id="ds_template_inf_sturgia" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_template="true" is_hero="false" culture="Culture.sturgia" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="24.03"
+                      weight="0.1867"
+                      build="0.2423"
+                      key="00000400000002417470000007729880744371117020002292515704801101000064300306435000000000000000000000000000000000000000000000D00000" />
+      <BodyPropertiesMax version="4"
+                         age="51.8"
+                         weight="0.6183"
+                         build="0.6205"
+                         key="00005804400034C6CA724A198494EEE75FF97877C690FE697ACD9F5B8F0A2C2904BAA0460B9DEFA4000000000000000000000000000000000000000077808105" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  <NPCCharacter id="ds_template_inf_fe_sturgia" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_female = "true" is_template="true" is_hero="false" culture="Culture.sturgia" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="22"
+                      weight="0.4234"
+                      build="0.4579"
+                      key="00000400007000010871010011222150850972055175321787234101702745220287662408313220000000000000000000000000000000000000000013040000" />
+      <BodyPropertiesMax version="4"
+                         age="50.04"
+                         weight="0.6244"
+                         build="0.6244"
+                         key="000B700580703010AC7A576B9BC4CCCCAAAE88898C9BBC698B78FF1A78AA7C5508DEE6890DACECBD000000000000000000000000000000000000000067C430C4" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  
+  <!--ASERAI-->
+	<NPCCharacter id="ds_template_inf_aserai" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_template="true" is_hero="false" culture="Culture.aserai" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="24.69"
+                      weight="0.304"
+                      build="0.3225"
+                      key="00167C088000005076802305267118800950800381410004A7675706880645330225502502224400000000000000000000000000000000000000000000401000" />
+      <BodyPropertiesMax version="4"
+                         age="51.03"
+                         weight="0.5725"
+                         build="0.6207"
+                         key="002DFC0880003A59DC83464B4C81DFF76FDA8549C386A7278DBABF698E2E8E6A04CB90460C9CEBC600000000000000000000000000000000000000006F808105" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  <NPCCharacter id="ds_template_inf_fe_aserai" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_female = "true" is_template="true" is_hero="false" culture="Culture.aserai" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="22.51"
+                      weight="0.3966"
+                      build="0.1806"
+                      key="0022500A100000013880000148801710AA2070388065000075327413763B464501136613010113000000000000000000000000000000000000000000082C1003" />
+      <BodyPropertiesMax version="4"
+                         age="50"
+                         weight="0.6194"
+                         build="0.6586"
+                         key="002DF40E520030139C826A4DEDD3DCA58FA8779BC4ABC932BFFAFF5C8B9F7E8908CCC6890C4DFCFD00000000000000000000000000000000000000006B9440C4" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  
+  <!--KHUZAIT-->
+	<NPCCharacter id="ds_template_inf_khuzait" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_template="true" is_hero="false" culture="Culture.khuzait" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="24.03"
+                      weight="0.4676"
+                      build="0.483"
+                      key="0011900880000587407011122CB700080603750BC3AE01016868030080000100001770030110211000000000000000000000000000000000000000000C281000" />
+      <BodyPropertiesMax version="4"
+                         age="57.98"
+                         weight="0.6016"
+                         build="0.5231"
+                         key="001CFC0CC00038D4B570543C6BC84DB844E97A6FFBEF8B9B7DCDBE388B3CDB550598A057096676F700000000000000000000000000000000000000000D204100" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  <NPCCharacter id="ds_template_inf_fe_khuzait" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_female = "true" is_template="true" is_hero="false" culture="Culture.khuzait" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="22.27"
+                      weight="0.1744"
+                      build="0.267"
+                      key="000B9C08807000014084576AAB74013799007109A5CA20085552630076595652013436130322443700000000000000000000000000000000000000001C6C0003" />
+      <BodyPropertiesMax version="4"
+                         age="50.55"
+                         weight="0.5744"
+                         build="0.6135"
+                         key="001CFC0E4070301368877B6DDED9899D9EA8757BCAEF9A69AAB7BE787EDD9E8A079DA6780996FBAF00000000000000000000000000000000000000006B2C40C4" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  
+  <!--BATTANIA-->
+	<NPCCharacter id="ds_template_inf_battania" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_template="true" is_hero="false" culture="Culture.battania" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="24.29"
+                      weight="0.162"
+                      build="0.3657"
+                      key="00000002C00003410560061000115164100574100001224225564603800101000255202405431101000000000000000000000000000000000000000000A01000" />
+      <BodyPropertiesMax version="4"
+                         age="52.82"
+                         weight="0.6104"
+                         build="0.62046"
+                         key="000580070000354AFE722D3D7685EEF98CAB7DFFAFC1FFCC99ABAF8A833C4B5705BBA0570BABEC96000000000000000000000000000000000000000001788105" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  <NPCCharacter id="ds_template_inf_fe_battania" name="{=LJ6Intaq}" age="21" voice="earnest" default_group="Infantry" is_female = "true" is_template="true" is_hero="false" culture="Culture.battania" battleTemplate="NPCCharacter.npc_companion_equipment_template_empire" civilianTemplate="NPCCharacter.npc_companion_equipment_template_empire" occupation="Soldier">
+    <face>
+      <BodyProperties version="4"
+                      age="22.94"
+                      weight="0.3781"
+                      build="0.4367"
+                      key="00000402C07000091175342420331020841873153560221887307600703322410277662407222210000000000000000000000000000000000000000010E40003" />
+      <BodyPropertiesMax version="4"
+                         age="50.72"
+                         weight="0.6099"
+                         build="0.6059"
+                         key="000B8807007030139A8B876D74859CBBAA8C77F69F98DC79AFD6FF587B37687808DEF6890D89C78900000000000000000000000000000000000000006BBC40C4" />
+		<!-- <face_key_template value="NPCCharacter.villager_empire" /> -->
+    </face>
+    <skills>
+    </skills>
+    <Traits>
+    </Traits>
+    <equipmentSet>
+      <equipment slot="Item0"
+                 id="Item.vlandia_sword_2_t3" />
+      <equipment slot="Item1"
+                 id="Item.stronger_reinforced_kite_shield" />
+      <equipment slot="Item2"
+                 id="Item.western_spear_3_t3" />
+      <equipment slot="Body"
+                 id="Item.sleeveless_padded_short_coat" />
+      <equipment slot="Leg"
+                 id="Item.empire_horseman_boots" />
+      <equipment slot="Head"
+                 id="Item.pointed_skullcap_over_cloth_headwrap" />
+      <equipment slot="Gloves"
+                 id="Item.buttoned_leather_bracers" />
+      <equipment slot="Cape"
+                 id="Item.scarf" />
+    </equipmentSet>
+  </NPCCharacter>
+  
+</NPCCharacters>
