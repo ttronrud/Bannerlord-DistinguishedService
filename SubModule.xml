@@ -18,19 +18,5 @@
     </SubModule>
   </SubModules>
   <Xmls>
-    <XmlNode>
-      <XmlName id="NPCCharacters" path="dstemplate"/>
-      <IncludedGameTypes>
-        <GameType value = "Campaign"/>
-        <GameType value = "CampaignStoryMode"/>
-      </IncludedGameTypes>
-    </XmlNode>
-    <XmlNode>
-      <XmlName id="ItemModifiers" path="ds_item_modifiers"/>
-      <IncludedGameTypes>
-        <GameType value = "Campaign"/>
-        <GameType value = "CampaignStoryMode"/>
-      </IncludedGameTypes>
-    </XmlNode>
   </Xmls>
 </Module>

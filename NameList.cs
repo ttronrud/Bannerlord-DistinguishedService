@@ -1,4 +1,16 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * Author: Thor Tronrud
+ * NameList.cs:
+ * 
+ * A class that holds the various suffices that we can add
+ * to a newly-promoted hero's name. Inspirations are... Varied.
+ * 
+ * A possibility to "vibe" score names to assign based on the 
+ * hero's traits is something I want to sketch out/add in 
+ * the future, probably in a larger hero-oriented update.
+ */
+
+using System.Collections.Generic;
 
 namespace DistinguishedService
 {
@@ -65,7 +77,7 @@ namespace DistinguishedService
         };
     }
 
-    public static class unit_type_list
+    public static class UnitTypeList
     {
         public static List<string> noble_units = new List<string>()
         {

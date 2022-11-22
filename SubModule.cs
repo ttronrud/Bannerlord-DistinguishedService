@@ -1,4 +1,18 @@
-﻿using System;
+﻿/*
+ * Author: Thor Tronrud
+ * SubModule.cs:
+ * 
+ * Bannerlord's required SubModule class. Provides access to
+ * the virtual methods we want to implement to load the mod into
+ * the game.
+ * 
+ * This mod does not change save files - and only activates on game start/load
+ * so it can be turned on and off as desired.
+ * In the starting methods I also add several event listeners based on values from
+ * the settings file, so if they're deactivated they aren't even invoked.
+ */
+
+using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -26,7 +40,13 @@ namespace DistinguishedService
 
             try
             {
-                this.DeserializeObject(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml"));
+                //Try to see if the OG modules file exists, if so preferentially use that
+                string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService"), "Settings.xml");
+                if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml")))
+                {
+                    path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
+                }
+                this.DeserializeObject(path);
             }
             catch (Exception ex)
             {
@@ -85,7 +105,13 @@ namespace DistinguishedService
             bool reload = false;
             try
             {
-                this.DeserializeObject(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml"));
+                //Try to see if the OG modules file exists, if so preferentially use that
+                string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService"), "Settings.xml");
+                if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml")))
+                {
+                    path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
+                }
+                this.DeserializeObject(path);
             }
             catch (Exception ex)
             {
@@ -143,7 +169,7 @@ namespace DistinguishedService
         //and set the state accordingly
         public override void OnAfterGameInitializationFinished(Game game, object starterObject)
         {
-            AddNewGuy.MyLittleWarbandLoaded = CheckMLWBLoaded();
+            PromotionManager.MyLittleWarbandLoaded = CheckMLWBLoaded();
             gamestarted = false;
         }
         //stupid function to determine if my little warband is loaded

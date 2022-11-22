@@ -1,5 +1,25 @@
-﻿//TODO
-//
+﻿/*
+ * Author: Thor Tronrud
+ * DSBattleBehaviour.cs:
+ * 
+ * This set of two classes is hooked into the start of battles
+ * Once it finds the player's current battle, it decides whether
+ * to add the DSBattleLogic behaviour to the mission.
+ * 
+ * This class overrides the ShowBattleResults method, which is
+ * invoked for a mission's behaviours when the battle has concluded
+ * and the scoreboard is being displayed.
+ * 
+ * This is necessary to pre-empt the end-of-battle loading screen,
+ * under which dialog options can be trapped, soft-locking the game...
+ * Ask me how I know...
+ * 
+ * This method checks through all the "agents" on the player's team,
+ * and selects ones that the player has in their party. It can't *check* if
+ * the agent that achieved the results was the instance added due to the player's
+ * party, but we can just pretend it was.
+ */
+
 using System;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
@@ -30,7 +50,7 @@ namespace DistinguishedService
             //base.OnAgentRemoved(affectedAgent, affectorAgent, agentState, blow);
         }*/
 
-        private int totalKillCount()
+        private int GetTotalKillCount()
         {
             int total_kill_count = 0;
             foreach (Agent ag in Mission.Current.PlayerTeam.ActiveAgents)
@@ -45,7 +65,7 @@ namespace DistinguishedService
 
         //Get a list of all kill counts
         //for percentile calculation
-        private List<float> kill_counts()
+        private List<float> GetKillCounts()
         {
             List<float> kills = new List<float>();
             foreach (Agent ag in Mission.Current.PlayerTeam.ActiveAgents)
@@ -59,7 +79,7 @@ namespace DistinguishedService
         }
 
         //Calculate the value of a percentile
-        public static double Percentile(IEnumerable<float> seq, double percentile)
+        public static double GetPercentile(IEnumerable<float> seq, double percentile)
         {
             var elements = seq.ToArray();
             Array.Sort(elements);
@@ -93,14 +113,14 @@ namespace DistinguishedService
                 return;
 
             //sum the total kill count in case nothing happened...
-            int total_kill_count = totalKillCount();
+            int total_kill_count = GetTotalKillCount();
 
             //if no chance for glory
             if (total_kill_count <= 0)
                 return;
 
             //Get kill number at the performance percentile
-            float perc_kills = (float)Percentile(kill_counts(), PromotionManager.__instance.outperform_percentile);
+            float perc_kills = (float)GetPercentile(GetKillCounts(), PromotionManager.__instance.outperform_percentile);
 
             int kill_thresh = 0;
             //Now, go through each agent in the player's team, skipping heros
@@ -135,7 +155,7 @@ namespace DistinguishedService
                 bool proceed = (PromotionManager.__instance.outperform_percentile <= 0 || ag.KillCount > MathF.Ceiling(perc_kills));
                 //If they qualify, add them and their kill count to the PM list
                 if (proceed && ag.KillCount >= kill_thresh) {
-                    if(AddNewGuy.is_soldier_qualified(co))
+                    if(PromotionManager.IsSoldierQualified(co))
                     {
                         //if an agent has enough kills and is high enough tier, nominate them
                         PromotionManager.__instance.nominations.Add(co);
@@ -144,7 +164,7 @@ namespace DistinguishedService
                 }
             }
             //finally, tell the PM to handle nominations
-            PromotionManager.__instance.OnPCBattleEnded_results();
+            PromotionManager.__instance.OnPCBattleEndedResults();
         }
         
         
@@ -159,7 +179,7 @@ namespace DistinguishedService
         public override void RegisterEvents()
         {
             CampaignEvents.OnMissionStartedEvent.AddNonSerializedListener((object)this, new Action<IMission>(this.FindBattle));
-            CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener((object)this, new Action<CampaignGameStarter>(PromotionManager.addDialogs));
+            CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener((object)this, new Action<CampaignGameStarter>(PromotionManager.AddDialogs));
         }
 
         public override void SyncData(IDataStore dataStore)

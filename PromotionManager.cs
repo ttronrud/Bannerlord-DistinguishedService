@@ -1,4 +1,18 @@
-﻿using Fasterflect;
+﻿/*
+ * Author: Thor Tronrud
+ * PromotionManager.cs:
+ * 
+ * Pretty monolothic, and by accretion, not necessity. Acts as a big
+ * state object with a lot of static methods providing the utilities
+ * used to promote basic troops to companions.
+ * 
+ * It is fed a list of nominees by the Battle Behaviour class and presents
+ * them to the player.
+ * 
+ * Also includes additional dialogue and supporting methods.
+ */
+
+using Fasterflect;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +46,6 @@ namespace DistinguishedService
         public static PromotionManager __instance = null; //our static instance
         public List<CharacterObject> nominations; //Who's currently nominated for a promotion?
         public List<int> killcounts; //What's their killcount?
-        public List<Hero> tocullonendmapevent; //Who should we remove at the end of the current mapevent?
 
         public static bool MyLittleWarbandLoaded = false; //is MLWB loaded? We'll need compatibility adjustments -_-
 
@@ -62,7 +75,16 @@ namespace DistinguishedService
 
         public PromotionManager()
         {
-            string path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
+            //string path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
+            //start with what we know will work
+            string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService"), "Settings.xml");
+            //check for a settings in the modules folder
+            //if it exists, use it instead!
+            if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml")))
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Using Modules/DistinguishedService Settings", Color.FromUint(4282569842U)));
+                path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
+            }
             Settings currentsettings;
             using (Stream stream = (Stream)new FileStream(path, FileMode.Open))
                 currentsettings = (Settings)new XmlSerializer(typeof(Settings)).Deserialize(stream);
@@ -94,7 +116,15 @@ namespace DistinguishedService
             killcounts = new List<int>();
 
             this.using_extern_namelist = currentsettings.NAMES_FROM_EXTERNAL_FILE;
-            this.extern_namelist = System.IO.Path.Combine(BasePath.Name, "Modules", "DistinguishedService", currentsettings.EXTERNAL_NAME_FILE);
+            this.extern_namelist = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService"), currentsettings.EXTERNAL_NAME_FILE); 
+            //Do the same with the namelist -- use the easier-to-access Modules folder preferentially
+            if(File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", currentsettings.EXTERNAL_NAME_FILE)))
+            {
+                this.extern_namelist = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", currentsettings.EXTERNAL_NAME_FILE);
+            }
+
+            
+
             if (this.using_extern_namelist)
             {
                 InformationManager.DisplayMessage(new InformationMessage("USING EXTERNAL NAMELIST FILE!\nThis file will be written back to/edited to knock out used names", Color.FromUint(4282569842U)));
@@ -127,7 +157,7 @@ namespace DistinguishedService
         //the end-of-battle loading screen, which was a pretty insidious bug
         //The PM instance's nominations and killcounts are populated from the Battle Behaviour
         //and in this method we go through and make sure the nominations are valid
-        public void OnPCBattleEnded_results()
+        public void OnPCBattleEndedResults()
         {
             //check if we care about the companion limit, and if there's room
             if (this.respect_companion_limit && Clan.PlayerClan.Companions.Count >= Clan.PlayerClan.CompanionLimit)
@@ -176,7 +206,7 @@ namespace DistinguishedService
                     mod_nominations = this.max_nominations;
                 }
 
-                MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Distinguished Soldiers", "Several soldiers made names for themselves in this battle. You can choose up to " + mod_nominations + " (or none, by exiting) to fight at your side as a companion.", this.gen_inquiryelements(coList, _stripped_kcs), true, mod_nominations, "DONE", "RANDOM", new Action<List<InquiryElement>>(OnNomineeSelect), (Action<List<InquiryElement>>)null, ""), true);
+                MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Distinguished Soldiers", "Several soldiers made names for themselves in this battle. You can choose up to " + mod_nominations + " (or none, by exiting) to fight at your side as a companion.", this.GenInquiryelements(coList, _stripped_kcs), true, mod_nominations, "DONE", "RANDOM", new Action<List<InquiryElement>>(OnNomineeSelect), (Action<List<InquiryElement>>)null, ""), true);
                 return;
 
             }
@@ -185,7 +215,7 @@ namespace DistinguishedService
 
         //First util function -- takes a character object list and killcount, creates a
         //corresponding list of InquiryElements showing the unit's preview and killcount tooltip
-        public List<InquiryElement> gen_inquiryelements(List<CharacterObject> _cos, List<int> _kills)
+        public List<InquiryElement> GenInquiryelements(List<CharacterObject> _cos, List<int> _kills)
         {
             List<InquiryElement> _ies = new List<InquiryElement>();
             for (int q = 0; q < _cos.Count; q++)
@@ -236,13 +266,13 @@ namespace DistinguishedService
         //nominated or not
         //Since end-tiers aren't uniform, we have to check if there are any upgrade targets
         //for the default branch
-        public static bool is_soldier_qualified(CharacterObject co)
+        public static bool IsSoldierQualified(CharacterObject co)
         {
             if (co == null)
             {
                 return false;
             }
-            if (AddNewGuy.__instance.tier_threshold < 0)
+            if (PromotionManager.__instance.tier_threshold < 0)
             {
                 if (co.UpgradeTargets == null || co.UpgradeTargets.Length == 0)
                 {
@@ -251,7 +281,7 @@ namespace DistinguishedService
             }
             else
             {
-                if (co.Tier >= AddNewGuy.__instance.tier_threshold)
+                if (co.Tier >= PromotionManager.__instance.tier_threshold)
                 {
                     return true;
                 }
@@ -304,7 +334,7 @@ namespace DistinguishedService
         //
         //TODO would probably be to make this use file IO, and maybe XML parsing to
         //allow external lists
-        public string getNameSuffix(CharacterObject co)
+        public string GetNameSuffix(CharacterObject co)
         {
             List<string> potential_suff = new List<string>();
             if (co.IsRanged)
@@ -404,7 +434,7 @@ namespace DistinguishedService
         //Seventh util function -- add variance to the game's main RPG traits
         //Making a hero with a "reputation" that we could potentially use
         //in the future for inter-companion (and inter-lord) conflict
-        public void addTraitVariance(Hero hero)
+        public void AddTraitVariance(Hero hero)
         {
             foreach (TraitObject trait in TraitObject.All)
             {
@@ -488,12 +518,12 @@ namespace DistinguishedService
                 else
                 {
                     external_name_successful = true;
-                    specialHero.SetName(new TextObject(new_name + getNameSuffix(co)), new TextObject(new_name));
+                    specialHero.SetName(new TextObject(new_name + GetNameSuffix(co)), new TextObject(new_name));
                 }
             }
             if (!using_extern_namelist || !external_name_successful)
             {
-                specialHero.SetName(new TextObject(specialHero.FirstName.ToString() + getNameSuffix(co)), specialHero.FirstName);
+                specialHero.SetName(new TextObject(specialHero.FirstName.ToString() + GetNameSuffix(co)), specialHero.FirstName);
             }
             specialHero.Culture = co.Culture;
 
@@ -506,7 +536,7 @@ namespace DistinguishedService
             AddHeroToPartyAction.Apply(specialHero, MobileParty.MainParty, true);
             CampaignEventDispatcher.Instance.OnHeroCreated(specialHero, false);
 
-            addTraitVariance(specialHero);
+            AddTraitVariance(specialHero);
             float adjusted_cost = this.up_front_cost;
             //GI gives 30% discount
             if (Hero.MainHero.GetPerkValue(DefaultPerks.Trade.GreatInvestor))
@@ -934,7 +964,7 @@ namespace DistinguishedService
         //Recruit to hero -- if you recruit a qualified unit, turn them into a hero immediately
         public void recruit_to_hero(CharacterObject troop, int amount)
         {
-            if (!is_soldier_qualified(troop) || !MobileParty.MainParty.MemberRoster.Contains(troop))
+            if (!IsSoldierQualified(troop) || !MobileParty.MainParty.MemberRoster.Contains(troop))
                 return;
             for (int i = 0; i < amount; i++)
             {
@@ -943,14 +973,14 @@ namespace DistinguishedService
                     MobileParty.MainParty.MemberRoster.RemoveTroop(troop, i);
                     return;
                 }
-                AddNewGuy.__instance.giveNewGuy(troop);
+                PromotionManager.__instance.PromoteUnit(troop);
             }
             MobileParty.MainParty.MemberRoster.RemoveTroop(troop, amount);
         }
         //And finally, for upgraded units
         public void upgrade_to_hero(CharacterObject upgradeFromTroop, CharacterObject upgradeToTroop, int number)
         {
-            if (!is_soldier_qualified(upgradeToTroop))
+            if (!IsSoldierQualified(upgradeToTroop))
                 return;
             for (int i = 0; i < number; i++)
             {
@@ -959,7 +989,7 @@ namespace DistinguishedService
                     MobileParty.MainParty.MemberRoster.RemoveTroop(upgradeToTroop, i);
                     return;
                 }
-                AddNewGuy.__instance.giveNewGuy(upgradeToTroop);
+                PromotionManager.__instance.PromoteUnit(upgradeToTroop);
             }
             MobileParty.MainParty.MemberRoster.RemoveTroop(upgradeToTroop, number);
         }
@@ -983,7 +1013,7 @@ namespace DistinguishedService
                 faux_kills.Add(1);
             }
 
-            MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Console Command", "Pick a soldier to uplift!", PromotionManager.__instance.gen_inquiryelements(cos, faux_kills), true, 1, "DONE", "RANDOM", new Action<List<InquiryElement>>(PromotionManager.__instance.OnNomineeSelect), (Action<List<InquiryElement>>)null, ""), true);
+            MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Console Command", "Pick a soldier to uplift!", PromotionManager.__instance.GenInquiryelements(cos, faux_kills), true, 1, "DONE", "RANDOM", new Action<List<InquiryElement>>(PromotionManager.__instance.OnNomineeSelect), (Action<List<InquiryElement>>)null, ""), true);
 
             /*AddNewGuy.__instance.Shuffle(cos);
             foreach (CharacterObject co in cos)
@@ -1047,7 +1077,7 @@ namespace DistinguishedService
                                 num_comps_in_party++;
                             }
                             //find first qualifying CharacterObject
-                            if (!(_co_ == null) && !_co_.IsHero && _co_.IsSoldier && AddNewGuy.is_soldier_qualified(_co_))
+                            if (!(_co_ == null) && !_co_.IsHero && _co_.IsSoldier && PromotionManager.IsSoldierQualified(_co_))
                             {
                                 qualified.Add(_co_);
 
@@ -1085,7 +1115,7 @@ namespace DistinguishedService
                 return;
             }
             Hero specialHero = HeroCreator.CreateSpecialHero(wanderer, (Settlement)null, (Clan)null, (Clan)null, rand.Next(20, 50));
-            specialHero.SetName(new TextObject(specialHero.FirstName.ToString() + getNameSuffix(co)), specialHero.FirstName);
+            specialHero.SetName(new TextObject(specialHero.FirstName.ToString() + GetNameSuffix(co)), specialHero.FirstName);
             specialHero.Culture = co.Culture;
 
 
@@ -1093,7 +1123,7 @@ namespace DistinguishedService
             AddHeroToPartyAction.Apply(specialHero, party, true);
             CampaignEventDispatcher.Instance.OnHeroCreated(specialHero, false);
 
-            addTraitVariance(specialHero);
+            AddTraitVariance(specialHero);
             GiveGoldAction.ApplyBetweenCharacters(party_leader, specialHero, this.up_front_cost, true);
             specialHero.HasMet = false;
 
@@ -1201,22 +1231,22 @@ namespace DistinguishedService
          */
 
         //Add the dialog options to the game
-        public static void addDialogs(CampaignGameStarter campaignGameStarter)
+        public static void AddDialogs(CampaignGameStarter campaignGameStarter)
         {
             //name change
-            campaignGameStarter.AddPlayerLine("companion_change_name_start", "hero_main_options", "companion_change_name_confirm", "I want you to be known by another name...", new ConversationSentence.OnConditionDelegate(namechangecondition), new ConversationSentence.OnConsequenceDelegate(namechanceconsequence), 100, (ConversationSentence.OnClickableConditionDelegate)null, (ConversationSentence.OnPersuasionOptionDelegate)null);
+            campaignGameStarter.AddPlayerLine("companion_change_name_start", "hero_main_options", "companion_change_name_confirm", "I want you to be known by another name...", new ConversationSentence.OnConditionDelegate(GetNamechangecondition), new ConversationSentence.OnConsequenceDelegate(GetNamechanceconsequence), 100, (ConversationSentence.OnClickableConditionDelegate)null, (ConversationSentence.OnPersuasionOptionDelegate)null);
             campaignGameStarter.AddDialogLine("companion_change_name_confirm", "companion_change_name_confirm", "hero_main_options", "That is all.", (ConversationSentence.OnConditionDelegate)null, (ConversationSentence.OnConsequenceDelegate)null, 100, (ConversationSentence.OnClickableConditionDelegate)null);
 
             //give companion to party
-            campaignGameStarter.AddPlayerLine("companion_transfer_start", "hero_main_options", "companion_transfer_confirm", "Take these companions into your party...", new ConversationSentence.OnConditionDelegate(givecomptoclanpartycondition), new ConversationSentence.OnConsequenceDelegate(givecomptoclanpartyconsequence), 100, (ConversationSentence.OnClickableConditionDelegate)null, (ConversationSentence.OnPersuasionOptionDelegate)null);
+            campaignGameStarter.AddPlayerLine("companion_transfer_start", "hero_main_options", "companion_transfer_confirm", "Take these companions into your party...", new ConversationSentence.OnConditionDelegate(GetGiveCompToClanPartyCondition), new ConversationSentence.OnConsequenceDelegate(GetGiveCompToClanPartyConsequence), 100, (ConversationSentence.OnClickableConditionDelegate)null, (ConversationSentence.OnPersuasionOptionDelegate)null);
             campaignGameStarter.AddDialogLine("companion_transfer_confirm", "companion_transfer_confirm", "hero_main_options", "That is all.", (ConversationSentence.OnConditionDelegate)null, (ConversationSentence.OnConsequenceDelegate)null, 100, (ConversationSentence.OnClickableConditionDelegate)null);
 
             //take companion back from party
-            campaignGameStarter.AddPlayerLine("companion_takeback_start", "hero_main_options", "companion_takeback_confirm", "I wish to reassign heroes in your party...", new ConversationSentence.OnConditionDelegate(takecompfromclanpartycondition), new ConversationSentence.OnConsequenceDelegate(takecompfromclanpartyconsequence), 100, (ConversationSentence.OnClickableConditionDelegate)null, (ConversationSentence.OnPersuasionOptionDelegate)null);
+            campaignGameStarter.AddPlayerLine("companion_takeback_start", "hero_main_options", "companion_takeback_confirm", "I wish to reassign heroes in your party...", new ConversationSentence.OnConditionDelegate(GetTakeCompFromClanPartyCondition), new ConversationSentence.OnConsequenceDelegate(GetTakeCompFromClanPartyConsequence), 100, (ConversationSentence.OnClickableConditionDelegate)null, (ConversationSentence.OnPersuasionOptionDelegate)null);
             campaignGameStarter.AddDialogLine("companion_takeback_confirm", "companion_takeback_confirm", "hero_main_options", "That is all.", (ConversationSentence.OnConditionDelegate)null, (ConversationSentence.OnConsequenceDelegate)null, 100, (ConversationSentence.OnClickableConditionDelegate)null);
 
             //poach a companion from a defeated party
-            campaignGameStarter.AddPlayerLine("enemy_comp_recruit_1", "defeated_lord_answer", "companion_poach_confirm", "After this defeat, are you sure you wouldn't rather work for me?", new ConversationSentence.OnConditionDelegate(PromotionManager.CapturedAIWandererCondition), (ConversationSentence.OnConsequenceDelegate)null, 100, (ConversationSentence.OnClickableConditionDelegate)null, (ConversationSentence.OnPersuasionOptionDelegate)null); //new ConversationSentence.OnClickableConditionDelegate(CanConvertWanderer)
+            campaignGameStarter.AddPlayerLine("enemy_comp_recruit_1", "defeated_lord_answer", "companion_poach_confirm", "After this defeat, are you sure you wouldn't rather work for me?", new ConversationSentence.OnConditionDelegate(PromotionManager.GetCapturedAIWandererCondition), (ConversationSentence.OnConsequenceDelegate)null, 100, (ConversationSentence.OnClickableConditionDelegate)null, (ConversationSentence.OnPersuasionOptionDelegate)null); //new ConversationSentence.OnClickableConditionDelegate(CanConvertWanderer)
             campaignGameStarter.AddDialogLine("enemy_comp_recruit_2", "companion_poach_confirm", "close_window", "{RECRUIT_RESPONSE}", (ConversationSentence.OnConditionDelegate)null, (ConversationSentence.OnConsequenceDelegate)null, 100, (ConversationSentence.OnClickableConditionDelegate)null);
 
         }
@@ -1225,16 +1255,16 @@ namespace DistinguishedService
         //A condition for whether the option will appear
         //A consequence that prompts the player for a new name
         //And a result that sets the companion's new name
-        private static bool namechangecondition()
+        private static bool GetNamechangecondition()
         {
             return Hero.OneToOneConversationHero != null && Hero.OneToOneConversationHero.Clan == Clan.PlayerClan && Hero.OneToOneConversationHero.IsPlayerCompanion;
         }
-        private static void namechanceconsequence()
+        private static void GetNamechanceconsequence()
         {
-            InformationManager.ShowTextInquiry(new TextInquiryData("Create a new name: ", string.Empty, true, false, GameTexts.FindText("str_done", (string)null).ToString(), (string)null, new Action<string>(PromotionManager.change_hero_name), (Action)null, false), false);
+            InformationManager.ShowTextInquiry(new TextInquiryData("Create a new name: ", string.Empty, true, false, GameTexts.FindText("str_done", (string)null).ToString(), (string)null, new Action<string>(PromotionManager.ChangeHeroName), (Action)null, false), false);
 
         }
-        private static void change_hero_name(string s)
+        private static void ChangeHeroName(string s)
         {
             Hero.OneToOneConversationHero.SetName(new TextObject(s), new TextObject(s));
         }
@@ -1244,15 +1274,15 @@ namespace DistinguishedService
         //Can you ask a companion to take other companions into their party?
         //Select who goes
         //Explicitly move them to the new party
-        private static bool givecomptoclanpartycondition()
+        private static bool GetGiveCompToClanPartyCondition()
         {
             return Hero.OneToOneConversationHero != null && Hero.OneToOneConversationHero.Clan == Clan.PlayerClan && (Hero.OneToOneConversationHero.IsPartyLeader);
         }
-        private static void givecomptoclanpartyconsequence()
+        private static void GetGiveCompToClanPartyConsequence()
         {
-            MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Transfer Heroes", "You can select who to assign to " + Hero.OneToOneConversationHero.Name + "'s party.", AddNewGuy.gen_transfer_list(PromotionManager.player_party_heroes()), true, PartyBase.MainParty.MemberRoster.Count, "DONE", "NOBODY", new Action<List<InquiryElement>>(PromotionManager.transfer_characters_to_conversation), (Action<List<InquiryElement>>)null, ""), true);
+            MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Transfer Heroes", "You can select who to assign to " + Hero.OneToOneConversationHero.Name + "'s party.", PromotionManager.GenTransferList(PromotionManager.GetPlayerPartyHeroCOs()), true, PartyBase.MainParty.MemberRoster.Count, "DONE", "NOBODY", new Action<List<InquiryElement>>(PromotionManager.TransferCompsToConversationParty), (Action<List<InquiryElement>>)null, ""), true);
         }
-        private static void transfer_characters_to_conversation(List<InquiryElement> ies)
+        private static void TransferCompsToConversationParty(List<InquiryElement> ies)
         {
             MobileParty conv = Hero.OneToOneConversationHero.PartyBelongedTo;
             foreach (InquiryElement ie in ies)
@@ -1264,7 +1294,7 @@ namespace DistinguishedService
             }
         }
         //Util function to create a list of heros in the player's party
-        private static List<CharacterObject> player_party_heroes()
+        private static List<CharacterObject> GetPlayerPartyHeroCOs()
         {
             List<CharacterObject> _hs_ = new List<CharacterObject>();
             foreach (TroopRosterElement tre in MobileParty.MainParty.MemberRoster.GetTroopRoster())
@@ -1281,15 +1311,15 @@ namespace DistinguishedService
         //Is this a party leader of your clan you're talking to
         //Select who to steal from their party
         //Explicitly transfer
-        private static bool takecompfromclanpartycondition()
+        private static bool GetTakeCompFromClanPartyCondition()
         {
             return Hero.OneToOneConversationHero != null && Hero.OneToOneConversationHero.Clan == Clan.PlayerClan && (Hero.OneToOneConversationHero.IsPartyLeader);
         }
-        private static void takecompfromclanpartyconsequence()
+        private static void GetTakeCompFromClanPartyConsequence()
         {
-            MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Transfer Heroes", "You can select who to take from " + Hero.OneToOneConversationHero.Name + "'s party.", AddNewGuy.gen_transfer_list(PromotionManager.conversation_party_heroes(), false), true, PartyBase.MainParty.MemberRoster.Count, "DONE", "NOBODY", new Action<List<InquiryElement>>(PromotionManager.transfer_characters_from_conversation), (Action<List<InquiryElement>>)null, ""), true);
+            MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Transfer Heroes", "You can select who to take from " + Hero.OneToOneConversationHero.Name + "'s party.", PromotionManager.GenTransferList(PromotionManager.GetConversationPartyHeros(), false), true, PartyBase.MainParty.MemberRoster.Count, "DONE", "NOBODY", new Action<List<InquiryElement>>(PromotionManager.TransferCompsFromConversationParty), (Action<List<InquiryElement>>)null, ""), true);
         }
-        private static void transfer_characters_from_conversation(List<InquiryElement> ies)
+        private static void TransferCompsFromConversationParty(List<InquiryElement> ies)
         {
             foreach (InquiryElement ie in ies)
             {
@@ -1298,8 +1328,24 @@ namespace DistinguishedService
                 AddHeroToPartyAction.Apply(_h_, MobileParty.MainParty, true);
             }
         }
+        //Util function -- Generates a list of InquiryElements from a list of CharacterObjects 
+        public static List<InquiryElement> GenTransferList(List<CharacterObject> _cos, bool require_mainparty = true)
+        {
+            List<InquiryElement> _ies = new List<InquiryElement>();
+
+            foreach (CharacterObject _co in _cos)
+            {
+                if ((!require_mainparty) || (require_mainparty && MobileParty.MainParty.MemberRoster.Contains(_co)))
+                {
+                    _ies.Add(new InquiryElement((object)_co, _co.Name.ToString(), new ImageIdentifier(CharacterCode.CreateFrom((BasicCharacterObject)_co)), true, " kills"));
+                }
+            }
+
+            return _ies;
+
+        }
         //Util function -- Gets list of heros in the party of the hero you are conversing with
-        private static List<CharacterObject> conversation_party_heroes()
+        private static List<CharacterObject> GetConversationPartyHeros()
         {
             PartyBase convparty = Hero.OneToOneConversationHero.PartyBelongedTo.Party;
             List<CharacterObject> _hs_ = new List<CharacterObject>();
@@ -1317,7 +1363,7 @@ namespace DistinguishedService
 
         //Condition for whether a captured enemy wanderer will consider switching sides if
         //your "values" align more closely to theirs
-        private static bool CapturedAIWandererCondition()
+        private static bool GetCapturedAIWandererCondition()
         {
             if (Hero.OneToOneConversationHero != null && Hero.OneToOneConversationHero.Clan != Clan.PlayerClan && Hero.OneToOneConversationHero.Occupation == Occupation.Wanderer)
             {

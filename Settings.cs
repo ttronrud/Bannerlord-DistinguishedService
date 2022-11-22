@@ -1,4 +1,10 @@
-﻿namespace DistinguishedService
+﻿/*
+ * Author: Thor Tronrud
+ * Settings.cs:
+ * 
+ * Represents a settings class to be serialized/deserialized into Settings.xml
+ */
+namespace DistinguishedService
 {
     public class Settings
     {
