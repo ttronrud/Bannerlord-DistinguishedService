@@ -1,5 +1,23 @@
 <Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	
+	<!--
+	Do you want to use an external namelist file to generate companion names?
+    This operates on a knock-out system, so used names are removed from the file.
+    This will ignore cultural names entirely, unless all custom names are used.
+	-->
+    <NAMES_FROM_EXTERNAL_FILE>false</NAMES_FROM_EXTERNAL_FILE>
+    
+    
+	<!--
+	Path within DistinguishedService module folder (modules/DistinguishedService/)
+    to external namelist text file.
+	-->
+    <EXTERNAL_NAME_FILE>external_namelist.txt</EXTERNAL_NAME_FILE>
+    
+	<!--
+	Do you want to ignore the caution text?
+	-->
+    <disable_caution_text>false</disable_caution_text>
+    
 	<!--
 	Cost in gold to pay the new hero up-front. Doesn't affect daily payments.
 	-->
@@ -11,9 +29,16 @@
 	<max_nominations>2</max_nominations>
 	
 	<!--
-	Increase in nomination chance per kill count of the nominee with the highest kills
+	Probability of an AI lord gaining a companion after a battle
+    [between 0-1]
+    DISABLED FOR NOW DUE TO CRASHES
 	-->
-	<combat_perf_nomination_chance_increase_per_kill>0.2</combat_perf_nomination_chance_increase_per_kill>
+    <ai_promotion_chance>0</ai_promotion_chance>
+    
+	<!--
+	Max number of AI-generated companions allowed in an AI party
+	-->
+    <max_ai_companions_per_party>1</max_ai_companions_per_party>
 	
 	<!--
 	number of kills required by an individual unit for nomination
@@ -31,46 +56,48 @@
 	<ran_kill_threshold>7</ran_kill_threshold>
 	
 	<!--
-	Total number of combatants for effective nomination chance to be equal to nomination_chance variable
-	-->
-	<battle_size_scale>50</battle_size_scale>
+	Does the unit need to do better than average, as well as meet kill thresholds?
+    default to 0.68, or 1 sigma above average
+	-->    
+    <outperform_percentile>0.68</outperform_percentile>
 	
+	<!--
+	How many skill points are awarded to the new companion (to be assigned by the player) 
+    per kill over the minimum kill threshold?
+	--> 
+    <skillpoints_per_excess_kill>5</skillpoints_per_excess_kill>
+    
 	<!--
 	The miniumum tier of troop elegible to be nominated to become a companion
+    Set to -1 to only allow upgrades for troops with no further upgrades
 	-->
-	<tier_threshold>4</tier_threshold>
+	<tier_threshold>-1</tier_threshold>
 	
 	<!--
-	The chance for a nomination to occurr after a battle
+	Number of skill bonuses you can select for the new heroes
 	-->
-	<nomination_chance>0.05</nomination_chance>
+    <number_of_skill_bonuses>3</number_of_skill_bonuses>
+    
+	<!--
+	Number of round you can assign skill bonuses during
+    Each round gives [base_additional_skill_points/round#] per skill
+	-->
+    <number_of_skill_rounds>2</number_of_skill_rounds>
 	
 	<!--
 	The total number of additional skill points to add to the new companion
 	-->
-	<base_additional_skill_points>150</base_additional_skill_points>
+	<base_additional_skill_points>30</base_additional_skill_points>
 	
 	<!--
 	The number of leadership points necessary for 50 extra skill points to be assigned
 	-->
-	<leadership_points_per_50_extra_skill_points>100</leadership_points_per_50_extra_skill_points>
+	<leadership_points_per_50_extra_skill_points>1250</leadership_points_per_50_extra_skill_points>
 	
 	<!--
-	The chance that a companion reduced to zero HP during a battle will die.
+	Should skills to invest points into be selected for you?
 	-->
-	<lethality_chance>-1</lethality_chance>
-	
-	<!--
-	The additional reduction in companion death chance for every 10 Medicine skill points
-	-->
-	<medicine_death_chance_reduction>0.0</medicine_death_chance_reduction>
-	
-	<!--
-	Factor by which to reduce chance of a companion in a different party dying when wounded.
-	Set > 1 to lower chance of death, < 1 to increase
-	-->
-	<away_lethality_reduction_factor>2</away_lethality_reduction_factor>
-	
+    <select_skills_randomly>false</select_skills_randomly>
 	
 	<!--
 	Replaces the post-battle nomination system with different behaviour:
@@ -82,4 +109,9 @@
 	Fill in perks on newly-generated heroes?
 	-->
 	<fill_in_perks>false</fill_in_perks>
+	
+	<!--
+	Should the game respect the native companion limit?
+	-->
+	<respect_companion_limit>false</respect_companion_limit>
 </Settings>
