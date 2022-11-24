@@ -72,7 +72,8 @@ namespace DistinguishedService
                 {
                     try
                     {
-                        CampaignEvents.MapEventEnded.AddNonSerializedListener((object)this, new Action<MapEvent>(_pm.MapEventEnded));
+                        InformationManager.DisplayMessage(new InformationMessage("AI Companions have been disabled for now!", Color.FromUint(4282569842U)));
+                        //CampaignEvents.MapEventEnded.AddNonSerializedListener((object)this, new Action<MapEvent>(_pm.MapEventEnded));
                     }
                     catch(Exception e)
                     {
@@ -139,7 +140,8 @@ namespace DistinguishedService
                 {
                     try
                     {
-                        CampaignEvents.MapEventEnded.AddNonSerializedListener((object)this, new Action<MapEvent>(_pm.MapEventEnded));
+                        InformationManager.DisplayMessage(new InformationMessage("AI Companions have been disabled for now!", Color.FromUint(4282569842U)));
+                        //CampaignEvents.MapEventEnded.AddNonSerializedListener((object)this, new Action<MapEvent>(_pm.MapEventEnded));
                     }
                     catch (Exception e)
                     {
