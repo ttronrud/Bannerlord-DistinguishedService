@@ -130,7 +130,9 @@ namespace DistinguishedService
             //so we'll just settle for something that works for now...
             foreach (Agent ag in Mission.Current.PlayerTeam.ActiveAgents)
             {
-                if (ag.IsHero)
+                //Include condition to ensure only units from the player's party get nominated
+                //it's a cast + long chain of references, but it works
+                if (ag.IsHero || !((PartyBase)ag.Origin.BattleCombatant).MobileParty.IsMainParty)
                     continue;
 
                 CharacterObject co = CharacterObject.Find(ag.Character.StringId);
