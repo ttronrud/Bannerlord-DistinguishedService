@@ -623,7 +623,6 @@ namespace DistinguishedService
                     AssignSkillsRandomly(specialHero, skp_to_assign / i, this.num_skill_bonuses);
                 }
             }
-
             int tot_to_add = specialHero.HeroDeveloper.UnspentAttributePoints;
             specialHero.HeroDeveloper.AddAttribute(DefaultCharacterAttributes.Vigor, 2, false);
             specialHero.HeroDeveloper.AddAttribute(DefaultCharacterAttributes.Control, 2, false);
@@ -1006,26 +1005,19 @@ namespace DistinguishedService
                 return "Usage: uplift_soldier [tier threshold = 0]";
             if (!int.TryParse(strings[0], out tierthresh))
                 tierthresh = 0;
-            List<CharacterObject> cos = new List<CharacterObject>(MobileParty.MainParty.MemberRoster.ToFlattenedRoster().Troops);
+            List<CharacterObject> cos = new List<CharacterObject>();
             List<int> faux_kills = new List<int>();
-            foreach(CharacterObject co in cos)
+            foreach (CharacterObject co in MobileParty.MainParty.MemberRoster.ToFlattenedRoster().Troops)
             {
-                faux_kills.Add(1);
+                if (co.IsHero || co.Tier < tierthresh)
+                    continue;
+                cos.Add(co);
+                faux_kills.Add(1337);
             }
 
             MBInformationManager.ShowMultiSelectionInquiry(new MultiSelectionInquiryData("Console Command", "Pick a soldier to uplift!", PromotionManager.__instance.GenInquiryelements(cos, faux_kills), true, 1, "DONE", "RANDOM", new Action<List<InquiryElement>>(PromotionManager.__instance.OnNomineeSelect), (Action<List<InquiryElement>>)null, ""), true);
 
-            /*AddNewGuy.__instance.Shuffle(cos);
-            foreach (CharacterObject co in cos)
-            {
-                //if they're already a hero, or too low a tier
-                if (co.IsHero || co.Tier < tierthresh)
-                    continue;
-                AddNewGuy.__instance.giveNewGuy(co);
-                MobileParty.MainParty.MemberRoster.RemoveTroop(co);
-                return "Created new companion!";
-            }*/
-            return "Nobody elegible!";
+            return "Dialog Generated";
         }
 
 
