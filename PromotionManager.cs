@@ -197,7 +197,7 @@ namespace DistinguishedService
                 _stripped_kcs = new List<int>(_stripped_kcs).OrderBy<int, int>(o => _stripped_kcs[_stripped_kcs.IndexOf(o)]).Reverse().ToList();
 
                 //check if number of possible nominations would put us over the companion limit
-                if (this.respect_companion_limit && (coList.Count + Clan.PlayerClan.Companions.Count) > Clan.PlayerClan.CompanionLimit)
+                if (this.respect_companion_limit && (this.max_nominations + Clan.PlayerClan.Companions.Count) > Clan.PlayerClan.CompanionLimit)
                 {
                     mod_nominations = Clan.PlayerClan.CompanionLimit - Clan.PlayerClan.Companions.Count;
                 }
