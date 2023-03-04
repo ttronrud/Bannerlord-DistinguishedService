@@ -526,9 +526,9 @@ namespace DistinguishedService
             }
             specialHero.Culture = co.Culture;
 
-            //specialHero.CharacterObject.TrySetPropertyValue("DefaultFormationClass", co.DefaultFormationClass);
-            //specialHero.CharacterObject.TrySetPropertyValue("DefaultFormationGroup", co.DefaultFormationGroup);
+            
 
+            //Default formation class seems to be read only, so I could't change it
             specialHero.CharacterObject.DefaultFormationGroup = co.DefaultFormationGroup;
 
 
@@ -551,8 +551,7 @@ namespace DistinguishedService
             }
             GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, specialHero, (int)adjusted_cost);
 
-            //specialHero.HasMet = true;
-
+            //Has met is now read only. So we're using setHasMet
             specialHero.SetHasMet(); 
 
             //special, equipment-formatting try-catch statement
