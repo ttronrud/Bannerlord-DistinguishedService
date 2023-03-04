@@ -12,7 +12,6 @@
  * Also includes additional dialogue and supporting methods.
  */
 
-using Fasterflect;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -527,8 +526,10 @@ namespace DistinguishedService
             }
             specialHero.Culture = co.Culture;
 
-            specialHero.CharacterObject.TrySetPropertyValue("DefaultFormationClass", co.DefaultFormationClass);
-            specialHero.CharacterObject.TrySetPropertyValue("DefaultFormationGroup", co.DefaultFormationGroup);
+            //specialHero.CharacterObject.TrySetPropertyValue("DefaultFormationClass", co.DefaultFormationClass);
+            //specialHero.CharacterObject.TrySetPropertyValue("DefaultFormationGroup", co.DefaultFormationGroup);
+
+            specialHero.CharacterObject.DefaultFormationGroup = co.DefaultFormationGroup;
 
 
             specialHero.ChangeState(Hero.CharacterStates.Active);
@@ -549,7 +550,10 @@ namespace DistinguishedService
                 adjusted_cost *= 0.75f;
             }
             GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, specialHero, (int)adjusted_cost);
-            specialHero.HasMet = true;
+
+            //specialHero.HasMet = true;
+
+            specialHero.SetHasMet(); 
 
             //special, equipment-formatting try-catch statement
             try
@@ -818,7 +822,7 @@ namespace DistinguishedService
                     }
                     try
                     {
-                        specialHero.HeroDeveloper.CallMethod("CheckInitialLevel", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                        specialHero.HeroDeveloper.CheckInitialLevel();
                     }
                     catch (Exception e)
                     {
@@ -935,7 +939,7 @@ namespace DistinguishedService
             }
             try
             {
-                specialHero.HeroDeveloper.CallMethod("CheckInitialLevel", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                specialHero.HeroDeveloper.CheckInitialLevel();
             }
             catch (Exception e)
             {
@@ -1117,7 +1121,9 @@ namespace DistinguishedService
 
             AddTraitVariance(specialHero);
             GiveGoldAction.ApplyBetweenCharacters(party_leader, specialHero, this.up_front_cost, true);
-            specialHero.HasMet = false;
+            
+            //specialHero.HasMet = false; //Has met seems to be read only in 1.1.0. There is SetHasMet() but it does not take any parameters, sooo idk how to set it to false
+            
 
             //special, equipment-formatting try-catch statement
             try
@@ -1198,7 +1204,7 @@ namespace DistinguishedService
             }
             try
             {
-                specialHero.HeroDeveloper.CallMethod("CheckInitialLevel", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                specialHero.HeroDeveloper.CheckInitialLevel();
             }
             catch (Exception e)
             {
