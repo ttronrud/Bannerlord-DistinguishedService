@@ -1,6 +1,6 @@
 ﻿<Module>
-  <Name value="Distinguished Service"/>
-  <Id value="DistinguishedService"/>
+  <Name value="Distinguished Service 1.1.0"/>
+  <Id value="DistinguishedService110"/>
   <Version value="v6.1.0"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
@@ -8,8 +8,8 @@
   </DependedModules>
   <SubModules>
     <SubModule>
-      <Name value="DistinguishedService"/>
-      <DLLName value="DistinguishedService.dll"/>
+      <Name value="DistinguishedService110"/>
+      <DLLName value="DistinguishedService110.dll"/>
       <SubModuleClassType value="DistinguishedService.dsSubModule"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />

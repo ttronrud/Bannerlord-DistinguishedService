@@ -41,10 +41,10 @@ namespace DistinguishedService
             try
             {
                 //Try to see if the OG modules file exists, if so preferentially use that
-                string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService"), "Settings.xml");
-                if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml")))
+                string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService110"), "Settings.xml");
+                if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService110", "Settings.xml")))
                 {
-                    path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
+                    path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService110", "Settings.xml");
                 }
                 this.DeserializeObject(path);
             }
@@ -107,10 +107,10 @@ namespace DistinguishedService
             try
             {
                 //Try to see if the OG modules file exists, if so preferentially use that
-                string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService"), "Settings.xml");
-                if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml")))
+                string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService110"), "Settings.xml");
+                if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService110", "Settings.xml")))
                 {
-                    path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
+                    path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService110", "Settings.xml");
                 }
                 this.DeserializeObject(path);
             }
