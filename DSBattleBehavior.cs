@@ -132,7 +132,7 @@ namespace DistinguishedService
             {
                 //Include condition to ensure only units from the player's party get nominated
                 //it's a cast + long chain of references, but it works
-                if (ag.IsHero || !((PartyBase)ag.Origin.BattleCombatant).MobileParty.IsMainParty)
+                if (ag.IsHero || ag.Origin == null || (PartyBase)ag.Origin.BattleCombatant == null || ((PartyBase)ag.Origin.BattleCombatant).MobileParty == null || !((PartyBase)ag.Origin.BattleCombatant).MobileParty.IsMainParty)
                     continue;
 
                 CharacterObject co = CharacterObject.Find(ag.Character.StringId);

@@ -12,7 +12,6 @@
  * Also includes additional dialogue and supporting methods.
  */
 
-using Fasterflect;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,13 +76,13 @@ namespace DistinguishedService
         {
             //string path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
             //start with what we know will work
-            string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService"), "Settings.xml");
+            string path = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService110"), "Settings.xml");
             //check for a settings in the modules folder
             //if it exists, use it instead!
-            if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml")))
+            if (File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService110", "Settings.xml")))
             {
-                InformationManager.DisplayMessage(new InformationMessage("Using Modules/DistinguishedService Settings", Color.FromUint(4282569842U)));
-                path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", "Settings.xml");
+                InformationManager.DisplayMessage(new InformationMessage("Using Modules/DistinguishedService110 Settings", Color.FromUint(4282569842U)));
+                path = Path.Combine(BasePath.Name, "Modules", "DistinguishedService110", "Settings.xml");
             }
             Settings currentsettings;
             using (Stream stream = (Stream)new FileStream(path, FileMode.Open))
@@ -116,11 +115,11 @@ namespace DistinguishedService
             killcounts = new List<int>();
 
             this.using_extern_namelist = currentsettings.NAMES_FROM_EXTERNAL_FILE;
-            this.extern_namelist = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService"), currentsettings.EXTERNAL_NAME_FILE); 
+            this.extern_namelist = Path.Combine(TaleWorlds.ModuleManager.ModuleHelper.GetModuleFullPath("DistinguishedService110"), currentsettings.EXTERNAL_NAME_FILE); 
             //Do the same with the namelist -- use the easier-to-access Modules folder preferentially
-            if(File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService", currentsettings.EXTERNAL_NAME_FILE)))
+            if(File.Exists(Path.Combine(BasePath.Name, "Modules", "DistinguishedService110", currentsettings.EXTERNAL_NAME_FILE)))
             {
-                this.extern_namelist = Path.Combine(BasePath.Name, "Modules", "DistinguishedService", currentsettings.EXTERNAL_NAME_FILE);
+                this.extern_namelist = Path.Combine(BasePath.Name, "Modules", "DistinguishedService110", currentsettings.EXTERNAL_NAME_FILE);
             }
 
             
@@ -527,8 +526,10 @@ namespace DistinguishedService
             }
             specialHero.Culture = co.Culture;
 
-            specialHero.CharacterObject.TrySetPropertyValue("DefaultFormationClass", co.DefaultFormationClass);
-            specialHero.CharacterObject.TrySetPropertyValue("DefaultFormationGroup", co.DefaultFormationGroup);
+            
+
+            //Default formation class seems to be read only, so I could't change it
+            specialHero.CharacterObject.DefaultFormationGroup = co.DefaultFormationGroup;
 
 
             specialHero.ChangeState(Hero.CharacterStates.Active);
@@ -549,7 +550,9 @@ namespace DistinguishedService
                 adjusted_cost *= 0.75f;
             }
             GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, specialHero, (int)adjusted_cost);
-            specialHero.HasMet = true;
+
+            //Has met is now read only. So we're using setHasMet
+            specialHero.SetHasMet(); 
 
             //special, equipment-formatting try-catch statement
             try
@@ -818,7 +821,7 @@ namespace DistinguishedService
                     }
                     try
                     {
-                        specialHero.HeroDeveloper.CallMethod("CheckInitialLevel", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                        specialHero.HeroDeveloper.CheckInitialLevel();
                     }
                     catch (Exception e)
                     {
@@ -935,7 +938,7 @@ namespace DistinguishedService
             }
             try
             {
-                specialHero.HeroDeveloper.CallMethod("CheckInitialLevel", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                specialHero.HeroDeveloper.CheckInitialLevel();
             }
             catch (Exception e)
             {
@@ -1117,7 +1120,9 @@ namespace DistinguishedService
 
             AddTraitVariance(specialHero);
             GiveGoldAction.ApplyBetweenCharacters(party_leader, specialHero, this.up_front_cost, true);
-            specialHero.HasMet = false;
+            
+            //specialHero.HasMet = false; //Has met seems to be read only in 1.1.0. There is SetHasMet() but it does not take any parameters, sooo idk how to set it to false
+            
 
             //special, equipment-formatting try-catch statement
             try
@@ -1198,7 +1203,7 @@ namespace DistinguishedService
             }
             try
             {
-                specialHero.HeroDeveloper.CallMethod("CheckInitialLevel", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                specialHero.HeroDeveloper.CheckInitialLevel();
             }
             catch (Exception e)
             {
